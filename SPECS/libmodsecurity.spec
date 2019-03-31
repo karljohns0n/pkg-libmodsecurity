@@ -1,15 +1,13 @@
 
 Name: libmodsecurity
-Version: 3.0.2
-Release: 3%{?dist}
+Version: 3.0.3
+Release: 1%{?dist}
 Summary: A library that loads/interprets rules written in the ModSecurity SecRules
 
 License: ASL 2.0
 URL: https://www.modsecurity.org/
 
 Source0: https://github.com/SpiderLabs/ModSecurity/releases/download/v%{version}/modsecurity-v%{version}.tar.gz
-
-# Back-port of the pkg-config file expected in the 3.0.3 release
 Source1: modsecurity.pc
 
 BuildRequires: gcc-c++
@@ -18,6 +16,9 @@ BuildRequires: flex
 BuildRequires: bison
 BuildRequires: git-core
 BuildRequires: ssdeep-devel
+BuildRequires: libmaxminddb-devel
+BuildRequires: lua-devel
+BuildRequires: doxygen
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(yajl)
 BuildRequires: pkgconfig(libcurl)
@@ -68,7 +69,6 @@ applications that use %{name}.
 %install
 %make_install
 
-# see Source1 above
 mkdir -p %{buildroot}%{_libdir}/pkgconfig
 sed s:@libdir@:%{_libdir}: <%{S:1} >%{buildroot}%{_libdir}/pkgconfig/modsecurity.pc
 
@@ -97,6 +97,10 @@ sed s:@libdir@:%{_libdir}: <%{S:1} >%{buildroot}%{_libdir}/pkgconfig/modsecurity
 
 
 %changelog
+* Tue Mar 26 2019 Karl Johnson <karljohnson.it@gmail.com> - 3.0.3-1
+- Bump to 3.0.3
+- Add MaxMind and Lua dependencies
+
 * Fri Oct 19 2018 Dridi Boukelmoune <dridi@fedoraproject.org> - 3.0.2-3
 - Back-port of modsecurity.pc
 
