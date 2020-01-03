@@ -1,14 +1,13 @@
 
 Name: libmodsecurity
 Version: 3.0.3
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: A library that loads/interprets rules written in the ModSecurity SecRules
 
 License: ASL 2.0
 URL: https://www.modsecurity.org/
 
 Source0: https://github.com/SpiderLabs/ModSecurity/releases/download/v%{version}/modsecurity-v%{version}.tar.gz
-Source1: modsecurity.pc
 
 BuildRequires: gcc-c++
 BuildRequires: make
@@ -69,9 +68,6 @@ applications that use %{name}.
 %install
 %make_install
 
-mkdir -p %{buildroot}%{_libdir}/pkgconfig
-sed s:@libdir@:%{_libdir}: <%{S:1} >%{buildroot}%{_libdir}/pkgconfig/modsecurity.pc
-
 
 %post -p /sbin/ldconfig
 
@@ -97,6 +93,9 @@ sed s:@libdir@:%{_libdir}: <%{S:1} >%{buildroot}%{_libdir}/pkgconfig/modsecurity
 
 
 %changelog
+* Thu Jan 2 2020 Karl Johnson <karljohnson.it@gmail.com> - 3.0.3-2
+- Remove pkg-config bits since it's included in this release
+
 * Tue Mar 26 2019 Karl Johnson <karljohnson.it@gmail.com> - 3.0.3-1
 - Bump to 3.0.3
 - Add MaxMind and Lua dependencies
