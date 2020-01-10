@@ -1,8 +1,9 @@
 
 Name: libmodsecurity
 Version: 3.0.3
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: A library that loads/interprets rules written in the ModSecurity SecRules
+Group: System/Libraries
 
 License: ASL 2.0
 URL: https://www.modsecurity.org/
@@ -40,6 +41,7 @@ by your application via Connectors.
 
 %package devel
 Summary: Development files for %{name}
+Group: System/Libraries
 Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description devel
@@ -48,6 +50,7 @@ developing applications that use %{name}.
 
 %package static
 Summary: Development files for %{name}
+Group: System/Libraries
 Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description static
@@ -93,6 +96,9 @@ applications that use %{name}.
 
 
 %changelog
+* Fri Jan 10 2020 Karl Johnson <karljohnson.it@gmail.com> 3.0.3-3
+- Add CentOS 8 support
+
 * Thu Jan 2 2020 Karl Johnson <karljohnson.it@gmail.com> - 3.0.3-2
 - Remove pkg-config bits since it's included in this release
 
