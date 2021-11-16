@@ -1,7 +1,7 @@
 
 Name: libmodsecurity
-Version: 3.0.3
-Release: 3%{?dist}
+Version: 3.0.5
+Release: 1%{?dist}
 Summary: A library that loads/interprets rules written in the ModSecurity SecRules
 Group: System/Libraries
 
@@ -96,6 +96,9 @@ applications that use %{name}.
 
 
 %changelog
+* Mon Nov 15 2021 Karl Johnson <karljohnson.it@gmail.com> 3.0.5-1
+- Bump to 3.0.5
+
 * Fri Jan 10 2020 Karl Johnson <karljohnson.it@gmail.com> 3.0.3-3
 - Add CentOS 8 support
 
