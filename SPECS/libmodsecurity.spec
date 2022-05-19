@@ -1,6 +1,6 @@
 
 Name: libmodsecurity
-Version: 3.0.5
+Version: 3.0.6
 Release: 1%{?dist}
 Summary: A library that loads/interprets rules written in the ModSecurity SecRules
 Group: System/Libraries
@@ -96,6 +96,9 @@ applications that use %{name}.
 
 
 %changelog
+* Thu May 19 2022 Karl Johnson <karljohnson.it@gmail.com> 3.0.6-1
+- Bump to 3.0.6
+
 * Mon Nov 15 2021 Karl Johnson <karljohnson.it@gmail.com> 3.0.5-1
 - Bump to 3.0.5
 
@@ -138,4 +141,3 @@ applications that use %{name}.
 
 * Mon Feb 22 2016 Athmane Madjoudj <athmane@fedoraproject.org> 3.0-0.git
 - Initial release
-
