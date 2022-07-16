@@ -1,7 +1,7 @@
 
 Name: libmodsecurity
 Version: 3.0.7
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: A library that loads/interprets rules written in the ModSecurity SecRules
 Group: System/Libraries
 
@@ -22,9 +22,12 @@ BuildRequires: doxygen
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(yajl)
 BuildRequires: pkgconfig(libcurl)
-BuildRequires: pkgconfig(geoip)
 BuildRequires: pkgconfig(libpcre)
 BuildRequires: pkgconfig(lmdb)
+
+%if 0%{?rhel} <= 8
+BuildRequires: pkgconfig(geoip)
+%endif
 
 # libinjection is supposed to be bundled (same as with mod_security 2.x)
 # See: https://github.com/client9/libinjection#embedding
@@ -96,6 +99,10 @@ applications that use %{name}.
 
 
 %changelog
+* Fri Jul 15 2022 Karl Johnson <karljohnson.it@gmail.com> 3.0.7-2
+- Add EL9 support
+- GeoIP support removed starting with el9, moving on to GeoIP2
+
 * Wed Jun 15 2022 Karl Johnson <karljohnson.it@gmail.com> 3.0.7-1
 - Bump to 3.0.7
 
