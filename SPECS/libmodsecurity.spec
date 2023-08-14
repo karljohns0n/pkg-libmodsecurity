@@ -1,7 +1,7 @@
 
 Name: libmodsecurity
-Version: 3.0.7
-Release: 2%{?dist}
+Version: 3.0.9
+Release: 1%{?dist}
 Summary: A library that loads/interprets rules written in the ModSecurity SecRules
 Group: System/Libraries
 
@@ -99,6 +99,9 @@ applications that use %{name}.
 
 
 %changelog
+* Mon May 8 2023 Karl Johnson <karljohnson.it@gmail.com> 3.0.9-1
+- Bump to 3.0.9
+
 * Fri Jul 15 2022 Karl Johnson <karljohnson.it@gmail.com> 3.0.7-2
 - Add EL9 support
 - GeoIP support removed starting with el9, moving on to GeoIP2
