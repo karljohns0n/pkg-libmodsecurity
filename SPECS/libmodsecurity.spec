@@ -1,6 +1,6 @@
 
 Name: libmodsecurity
-Version: 3.0.10
+Version: 3.0.12
 Release: 1%{?dist}
 Summary: A library that loads/interprets rules written in the ModSecurity SecRules
 Group: System/Libraries
@@ -8,7 +8,7 @@ Group: System/Libraries
 License: ASL 2.0
 URL: https://www.modsecurity.org/
 
-Source0: https://github.com/SpiderLabs/ModSecurity/releases/download/v%{version}/modsecurity-v%{version}.tar.gz
+Source0: https://github.com/owasp-modsecurity/ModSecurity/releases/download/v%{version}/modsecurity-v%{version}.tar.gz
 
 BuildRequires: gcc-c++
 BuildRequires: make
@@ -99,6 +99,9 @@ applications that use %{name}.
 
 
 %changelog
+* Wed Jan 31 2024 Karl Johnson <karljohnson.it@gmail.com> 3.0.12-1
+- Bump to 3.0.12
+
 * Mon Aug 14 2023 Karl Johnson <karljohnson.it@gmail.com> 3.0.10-1
 - Bump to 3.0.10
 
