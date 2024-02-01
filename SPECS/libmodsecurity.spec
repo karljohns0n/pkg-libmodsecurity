@@ -22,7 +22,7 @@ BuildRequires: doxygen
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(yajl)
 BuildRequires: pkgconfig(libcurl)
-BuildRequires: pkgconfig(libpcre)
+BuildRequires: pkgconfig(libpcre2-8)
 BuildRequires: pkgconfig(lmdb)
 
 %if 0%{?rhel} <= 8
@@ -67,13 +67,12 @@ applications that use %{name}.
 
 
 %build
-%configure --libdir=%{_libdir} --with-lmdb
+%configure --libdir=%{_libdir} --with-lmdb --with-pcre2 --without-pcre
 %make_build
 
 
 %install
 %make_install
-
 
 %post -p /sbin/ldconfig
 
