@@ -16,7 +16,7 @@ BuildRequires: flex
 BuildRequires: bison
 BuildRequires: git-core
 BuildRequires: ssdeep-devel
-BuildRequires: libmaxminddb-devel
+BuildRequires: libmaxminddb-devel >= 1.5.2
 BuildRequires: lua-devel
 BuildRequires: doxygen
 BuildRequires: pkgconfig(libxml-2.0)
