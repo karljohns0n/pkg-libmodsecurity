@@ -100,6 +100,7 @@ applications that use %{name}.
 %changelog
 * Tue Oct 29 2024 Ruben Herold <ruben@insecure.pw> 3.0.13-1
 - Bump to 3.0.13
+- Limit version for libmaxminddb-devel
 
 * Wed Jan 31 2024 Karl Johnson <karljohnson.it@gmail.com> 3.0.12-1
 - Bump to 3.0.12
