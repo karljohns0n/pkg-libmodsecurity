@@ -1,6 +1,6 @@
 
 Name: libmodsecurity
-Version: 3.0.12
+Version: 3.0.13
 Release: 1%{?dist}
 Summary: A library that loads/interprets rules written in the ModSecurity SecRules
 Group: System/Libraries
@@ -16,7 +16,7 @@ BuildRequires: flex
 BuildRequires: bison
 BuildRequires: git-core
 BuildRequires: ssdeep-devel
-BuildRequires: libmaxminddb-devel
+BuildRequires: libmaxminddb-devel >= 1.5.2
 BuildRequires: lua-devel
 BuildRequires: doxygen
 BuildRequires: pkgconfig(libxml-2.0)
@@ -98,6 +98,10 @@ applications that use %{name}.
 
 
 %changelog
+* Tue Oct 29 2024 Ruben Herold <ruben@insecure.pw> 3.0.13-1
+- Bump to 3.0.13
+- Limit version for libmaxminddb-devel
+
 * Wed Jan 31 2024 Karl Johnson <karljohnson.it@gmail.com> 3.0.12-1
 - Bump to 3.0.12
 
