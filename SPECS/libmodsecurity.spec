@@ -1,7 +1,7 @@
 
 Name: libmodsecurity
 Version: 3.0.13
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: A library that loads/interprets rules written in the ModSecurity SecRules
 Group: System/Libraries
 
@@ -27,6 +27,10 @@ BuildRequires: pkgconfig(lmdb)
 
 %if 0%{?rhel} <= 8
 BuildRequires: pkgconfig(geoip)
+%endif
+
+%if 0%{?rhel} <= 7
+BuildRequires: devtoolset-8-gcc devtoolset-8-gcc-c++
 %endif
 
 # libinjection is supposed to be bundled (same as with mod_security 2.x)
@@ -61,12 +65,16 @@ The %{name}-static package contains static libraries for developing
 applications that use %{name}.
 
 
-
 %prep
 %autosetup -n modsecurity-v%{version}
 
 
 %build
+
+%if 0%{?rhel} <= 7
+source /opt/rh/devtoolset-8/enable 
+%endif
+
 %configure --libdir=%{_libdir} --with-lmdb --with-pcre2 --without-pcre
 %make_build
 
@@ -98,6 +106,9 @@ applications that use %{name}.
 
 
 %changelog
+* Tue Nov 5 2024 Karl Johnson <karljohnson.it@gmail.com> 3.0.13-2
+- Use GCC8 for EL7 and lower to fix compilation with 3.0.13
+
 * Tue Oct 29 2024 Ruben Herold <ruben@insecure.pw> 3.0.13-1
 - Bump to 3.0.13
 - Limit version for libmaxminddb-devel
