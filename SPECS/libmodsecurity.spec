@@ -1,7 +1,7 @@
 
 Name: libmodsecurity
-Version: 3.0.13
-Release: 2%{?dist}
+Version: 3.0.14
+Release: 1%{?dist}
 Summary: A library that loads/interprets rules written in the ModSecurity SecRules
 Group: System/Libraries
 
@@ -106,6 +106,9 @@ source /opt/rh/devtoolset-8/enable
 
 
 %changelog
+* Thu Apr 24 2025 Karl Johnson <karljohnson.it@gmail.com> 3.0.14-1
+- Bump to 3.0.14
+
 * Tue Nov 5 2024 Karl Johnson <karljohnson.it@gmail.com> 3.0.13-2
 - Use GCC8 for EL7 and lower to fix compilation with 3.0.13
 
