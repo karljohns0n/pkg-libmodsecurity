@@ -1,7 +1,7 @@
 
 Name: libmodsecurity
-Version: 3.0.14
-Release: 2%{?dist}
+Version: 3.0.15
+Release: 1%{?dist}
 Summary: A library that loads/interprets rules written in the ModSecurity SecRules
 Group: System/Libraries
 
@@ -107,6 +107,9 @@ find $RPM_BUILD_ROOT -name "*.la" -delete
 
 
 %changelog
+* Wed May 13 2026 Karl Johnson <karljohnson.it@gmail.com> 3.0.15-1
+- Bump to 3.0.15
+
 * Mon Sep 1 2025 Karl Johnson <karljohnson.it@gmail.com> 3.0.14-2
 - Add el10 support
 
