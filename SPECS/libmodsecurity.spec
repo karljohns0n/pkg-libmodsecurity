@@ -1,6 +1,6 @@
 
 Name: libmodsecurity
-Version: 3.0.15
+Version: 3.0.16
 Release: 1%{?dist}
 Summary: A library that loads/interprets rules written in the ModSecurity SecRules
 Group: System/Libraries
@@ -34,8 +34,8 @@ BuildRequires: devtoolset-8-gcc devtoolset-8-gcc-c++
 %endif
 
 # libinjection is supposed to be bundled (same as with mod_security 2.x)
-# See: https://github.com/client9/libinjection#embedding
-Provides: bundled(libinjection) = 3.9.2
+# See: https://github.com/libinjection/libinjection#embedding
+Provides: bundled(libinjection) = 4.0.0
 
 %description
 Libmodsecurity is one component of the ModSecurity v3 project.
@@ -107,6 +107,10 @@ find $RPM_BUILD_ROOT -name "*.la" -delete
 
 
 %changelog
+* Mon Aug 31 2026 Karl Johnson <karljohnson.it@gmail.com> 3.0.16-1
+- Bump to 3.0.16
+- Update bundled libinjection Provides to 4.0.0
+
 * Wed May 13 2026 Karl Johnson <karljohnson.it@gmail.com> 3.0.15-1
 - Bump to 3.0.15
 

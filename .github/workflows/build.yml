@@ -1,8 +1,8 @@
 name: libmodsecurity
 
-on:
+on: 
   push:
-    branches:
+    branches: 
       - master
     tags:
       - '*'
@@ -10,15 +10,11 @@ on:
     branches:
       - master
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   buildrpm:
     name: Build el${{ matrix.VERSION }} ${{ matrix.PKG_ARCH }} rpm
     runs-on: ${{ matrix.RUNNER }}
-    timeout-minutes: 90
+    timeout-minutes: 60
     env:
       PKG_NAME: libmodsecurity
       RPMBUILD_IMAGE: docker.io/karljohns0n/rpmbuild:9
@@ -37,31 +33,37 @@ jobs:
             OS: karljohns0n/centos
             PKG_ARCH: x86_64
             RUNNER: ubuntu-24.04
+            OPT: ""
           - VERSION: 8
             OS: rockylinux/rockylinux
             PKG_ARCH: x86_64
             RUNNER: ubuntu-24.04
+            OPT: ""
           - VERSION: 9
             OS: rockylinux/rockylinux
             PKG_ARCH: x86_64
             RUNNER: ubuntu-24.04
+            OPT: ""
           - VERSION: 9
             OS: rockylinux/rockylinux
             PKG_ARCH: aarch64
             RUNNER: ubuntu-24.04-arm
+            OPT: ""
           - VERSION: 10
             OS: rockylinux/rockylinux
             PKG_ARCH: x86_64
             RUNNER: ubuntu-24.04
+            OPT: ""
           - VERSION: 10
             OS: rockylinux/rockylinux
             PKG_ARCH: aarch64
             RUNNER: ubuntu-24.04-arm
+            OPT: ""
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
-      - name: Sanity - show host arch and Docker info
+      - name: Sanity — show host arch and Docker info
         run: |
           uname -m
           docker info --format '{{.ServerVersion}} {{.OperatingSystem}} (default platform {{.OSType}}/{{.Architecture}})'
@@ -73,15 +75,14 @@ jobs:
           docker run ${DOCKER_OPTS} \
             -e PKG_NAME="${PKG_NAME}" \
             -v "${GITHUB_WORKSPACE}:/tmp/${PKG_NAME}" \
-            "${RPMBUILD_IMAGE}" \
+            ${RPMBUILD_IMAGE} \
             bash -lc '
               set -euo pipefail
 
               cd /tmp/${PKG_NAME}
-              mkdir -p BUILD RPMS SOURCES SRPMS
 
               PKG_VERSION=$(awk "/^Version:/{print \$2}" SPECS/${PKG_NAME}.spec)
-              PKG_RELEASE=$(awk "/^Release:/{print \$2}" SPECS/${PKG_NAME}.spec | sed "s/%{?dist}//")
+              PKG_RELEASE=$(awk "/^Release:/{print \$2}" SPECS/${PKG_NAME}.spec | tr -d "%{?dist}")
 
               usermod -a -G mock root || true
               mkdir -p /var/lib/mock /var/cache/mock
@@ -95,13 +96,13 @@ jobs:
                    --spec=SPECS/${PKG_NAME}.spec \
                    --sources=SOURCES \
                    --resultdir=SRPMS \
-                   --buildsrpm
+                   --buildsrpm ${{ matrix.OPT }}
 
               mock --isolation=simple --clean \
                    -D "dist .el${{ matrix.VERSION }}" \
                    -r aeris-${{ matrix.VERSION }}-${{ matrix.PKG_ARCH }} \
                    --resultdir=RPMS \
-                   --rebuild SRPMS/${PKG_NAME}-${PKG_VERSION}-${PKG_RELEASE}.el${{ matrix.VERSION }}.src.rpm
+                   --rebuild SRPMS/${PKG_NAME}-${PKG_VERSION}-${PKG_RELEASE}.el${{ matrix.VERSION }}.src.rpm ${{ matrix.OPT }}
 
               rpm -qlp RPMS/${PKG_NAME}-${PKG_VERSION}-${PKG_RELEASE}.el${{ matrix.VERSION }}.${{ matrix.PKG_ARCH }}.rpm --noartifact
             '
@@ -113,19 +114,20 @@ jobs:
           docker run ${DOCKER_OPTS} \
             -e PKG_NAME="${PKG_NAME}" \
             -v "${GITHUB_WORKSPACE}:/tmp/${PKG_NAME}" \
-            "${{ matrix.OS }}:${{ matrix.VERSION }}" \
+            ${{ matrix.OS }}:${{ matrix.VERSION }} \
             bash -lc '
               set -euo pipefail
 
               cd /tmp/${PKG_NAME}
               PKG_VERSION=$(awk "/^Version:/{print \$2}" SPECS/${PKG_NAME}.spec)
-              PKG_RELEASE=$(awk "/^Release:/{print \$2}" SPECS/${PKG_NAME}.spec | sed "s/%{?dist}//")
+              PKG_RELEASE=$(awk "/^Release:/{print \$2}" SPECS/${PKG_NAME}.spec | tr -d "%{?dist}")
 
               yum clean all || true
               bash -lc "[[ ! -f /etc/yum.repos.d/aeris.repo ]] && yum -y install https://repo.aerisnetwork.com/pub/aeris-release-$(rpm -E %{rhel}).rpm || echo continue"
               yum install --enablerepo="aeris,aeris-testing" -y "RPMS/${PKG_NAME}-${PKG_VERSION}-${PKG_RELEASE}.el${{ matrix.VERSION }}.${{ matrix.PKG_ARCH }}.rpm"
 
               rpm -q "${PKG_NAME}"
+              rpm -ql "${PKG_NAME}" | grep libmodsecurity.so
             '
 
       - name: Upload RPMs
